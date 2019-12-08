@@ -1,81 +1,77 @@
-# desafio-mobile
+# Project Title
 
-First step: Fazer fork desse projeto e iniciar teu desafio! :)
+One Paragraph of project description goes here
 
-Usar como referência os seguintes apps:
-https://play.google.com/store/apps/details?id=com.mobfiq.epocacosmeticos&hl=pt_BR
+## Getting Started
 
-https://apps.apple.com/br/app/%C3%A9poca-cosm%C3%A9ticos-e-perfumes/id1418608927
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+### Prerequisites
 
-## Desafio
-Em Android gerar uma .apk.
-Em React Native utilizar a versão 0.58 ou superior e gerar uma .apk
-Não utilizar framework/libs que engessem o app como por exemplo EXPO.
-### 1) Criar uma vitrine, com duas colunas e utilizando os dados retornados da API
+What things you need to install the software and how to install them
 
-API Search  
-[POST]  
-(Headers: “Content-Type : application/json”)  
-https://desafio.mobfiq.com.br/Search/Criteria  
 ```
-{
-  "Query" : "" (string),
-  "Offset": 0 (int),
-  "Size": 10 (int)
-} 
+Give examples
 ```
 
-![alt text](http://i.imgur.com/ebjy0C6.png)
-![alt text](http://i.imgur.com/k2w9h6S.png)
+### Installing
 
- 
-Requisitos:
+A step by step series of examples that tell you how to get a development env running
 
-1. Executar search de 10 produtos
-   - Ao abrir o App, o usuário deve ver a home, que exibe 10 produtos no carrosel. Os produtos da home são o resultado da consulta à API omitindo o parâmetro ```Query```.
-2. Implementar scroll infinito
-   - Quando o usuário rolar até o final da tela, os 10 próximos produtos devem ser exibidos.
-3. Exibir imagem, preço de tabela, preço final, melhor opção de parcelamento e desconto
-   - Estas informações devem ser a do SKU/Seller com o menor preço final
-4. Implementar busca por texto
-   - Deve haver uma barra de busca, onde o usuário pode procurar produtos. O texto digitado pelo usuário será enviado na propriedade ```Query```. A busca deve ser iniciada após o usuário digitar o terceiro caractere.Por exemplo se quiser buscar por Cafeteira a busca iniciará quando digitar "Caf".
+Say what the step will be
 
-### 2) Implementar árvore de categorias
+```
+Give the example
+```
 
-(Headers: “Content-Type : application/json”)  
-[GET]  
-https://desafio.mobfiq.com.br/StorePreference/CategoryTree  
+And repeat
 
-![alt text](http://i.imgur.com/W5GlHjz.png)
+```
+until finished
+```
 
-Requisitos:
+End with an example of getting some data out of the system or using it for a little demo
 
-1. Exibir a lista de categorias.
-2. Ao clicar em uma categoria, o usuário deve ser direcionado para as subcategorias.
-3. O layout da tela de subcategorias é igual à tela de categorias.
-4. O título da tela da subcategoria deve ser o nome de sua categoria pai.
+## Running the tests
 
-** Não é necessário usar ícones, mas será um diferencial.
+Explain how to run the automated tests for this system
 
-#### REGRAS:
+### Break down into end to end tests
 
-- Tudo o que foi solicitado no desafio é fácil de ser realizado, será diferencial o que for implementado a mais ou melhoria.
-- NÃO FAÇA TUDO EM  APENAS UM COMMIT.
-- Tratamento de erros será um grande diferencial.
+Explain what these tests test and why
 
-#### O QUE ESTAMOS AVALIANDO:
+```
+Give an example
+```
 
-- O aplicativo funcionando, portanto nos envie uma apk.
-- Código deve ser versionado no git.
-- Código bem estruturado, com divisão de responsabilidades.
-- Uso de bibliotecas adequadas, sem a sensação de "gambiarra".
-- Código apresentável, ou seja, cuidado para não deixar código comentado, métodos vazios, prints perdidos, etc.
-- Código legível.
-- Ausência de bugs.
-- Boa usabilidade e noção de estética.
-- Mensagens de commit relevantes.
+### And coding style tests
 
-#### BOAS SURPRESAS:
+Explain what these tests test and why
 
-- Apesar de não estar no escopo, o candidato é bem-vindo para implementar testes unitários, animações, outras funcionalidades ou qualquer outra coisa que enriqueça o projeto. Porém, é importante lembrar que isso só deve ser feito caso a entrega do escopo esteja garantida.
+```
+Give an example
+```
+
+## Deployment
+
+Add additional notes about how to deploy this on a live system
+
+## Built With
+
+- [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+- [Maven](https://maven.apache.org/) - Dependency Management
+- [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+
+## Contributing
+
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+
+## Authors
+
+- **Billie Thompson** - _Initial work_ - [PurpleBooth](https://github.com/PurpleBooth)
+
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
