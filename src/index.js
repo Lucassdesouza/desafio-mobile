@@ -5,6 +5,8 @@ import '~/config/ReactotronConfig';
 import {Provider} from 'react-redux';
 import store from './store';
 
+import SnackBarRedux from '~/components/Snackbar';
+
 import Routes from '~/routes/';
 
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
@@ -23,6 +25,7 @@ const App = () => (
   <Provider store={store}>
     <PaperProvider theme={theme}>
       <Routes />
+      <SnackBarRedux />
     </PaperProvider>
   </Provider>
 );

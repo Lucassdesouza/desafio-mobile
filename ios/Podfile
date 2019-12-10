@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'AwesomeExample' do
-  # Pods for AwesomeExample
+target 'ProductsShowcase' do
+  # Pods for ProductsShowcase
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -34,7 +34,9 @@ target 'AwesomeExample' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  target 'AwesomeExampleTests' do
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
+  target 'ProductsShowcaseTests' do
     inherit! :search_paths
     # Pods for testing
   end
@@ -42,10 +44,10 @@ target 'AwesomeExample' do
   use_native_modules!
 end
 
-target 'AwesomeExample-tvOS' do
-  # Pods for AwesomeExample-tvOS
+target 'ProductsShowcase-tvOS' do
+  # Pods for ProductsShowcase-tvOS
 
-  target 'AwesomeExample-tvOSTests' do
+  target 'ProductsShowcase-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end
