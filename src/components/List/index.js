@@ -1,19 +1,14 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View} from 'react-native';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-
-class ItemList extends Component {
+class List extends Component {
   componentDidMount() {}
 
   render() {
-    const {item} = this.props;
+    const {list} = this.props;
     return (
       <View key={item.Id} styles={styles.card}>
         <View styles={styles.img}>
@@ -43,41 +38,10 @@ class ItemList extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  card: {
-    marginHorizontal: 20,
-  },
-  img: {
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#000',
-  },
-  name: {
-    fontSize: 9,
-    width: 30,
-  },
-  list: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    flexWrap: 'wrap',
-  },
-  content: {
-    textAlign: 'center',
-  },
-  listContainer: {
-    flex: 1,
-  },
-  price: {
-    fontWeight: '700',
-  },
+const mapStateToProps = state => ({
+  list: state.list.list,
 });
-
-const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
-export default ItemList = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ItemList);
+export default List = connect(mapStateToProps, mapDispatchToProps)(List);

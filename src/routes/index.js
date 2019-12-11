@@ -1,12 +1,15 @@
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
-import Main from '~/pages/Main';
-import Menu from '~/pages/Menu';
+import MainScreen from '~/pages/Main';
+import MenuScreen from '~/pages/Menu';
 
 const Routes = createAppContainer(
   createStackNavigator(
-    {Main, Menu},
+    {
+      Main: {screen: MainScreen},
+      Menu: {screen: MenuScreen},
+    },
     {
       initialRouteName: 'Main',
       defaultNavigationOptions: {

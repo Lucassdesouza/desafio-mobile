@@ -28,16 +28,16 @@ import {Text} from 'react-native-paper';
 class Main extends Component {
   static navigationOptions = navigation => ({
     title: 'Details',
-    headerLeft: () => {
-      return (
-        <IconButton
-          onPress={() => navigation.navigate('Menu')}
-          color="#000"
-          icon="menu"
-          size={28}
-        />
-      );
-    },
+    // headerLeft: () => {
+    //   return (
+    //     <IconButton
+    //       onPress={() => navigation.navigate('Menu')}
+    //       color="#000"
+    //       icon="menu"
+    //       size={28}
+    //     />
+    //   );
+    // },
   });
 
   componentDidMount() {

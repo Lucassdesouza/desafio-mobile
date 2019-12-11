@@ -11,7 +11,7 @@ export const types = {
 // Reducers
 const INITIAL_STATE = {
   list: null,
-  toggleList: false,
+  toggleList: true,
   reloadButton: false,
   loadingNew: false,
   pullRefresh: false,

@@ -49,49 +49,78 @@ class Products extends Component {
 
   render() {
     const {pullRefresh, products} = this.props;
+
     return (
       <View>
-        <View styles={styles.list}>
-          <FlatList
-            data={products}
-            onRefresh={() => this._reload()}
-            refreshing={pullRefresh}
-            renderItem={({item, index, separators}) => (
-              <View key={item.Id} styles={styles.card}>
+        <FlatList
+          style={styles.list}
+          contentContainerStyle={styles.listContainer}
+          data={products}
+          onRefresh={() => this._reload()}
+          refreshing={pullRefresh}
+          renderItem={({item, index, separators}) => (
+            <View key={item.Id} key={index} styles={styles.card}>
+              <View styles={styles.img}>
                 <Image
                   source={{
                     uri: item.Images[0].ImageUrl,
                   }}
-                  style={{width: 50, height: 50}}
+                  style={{width: 140, height: 140}}
                 />
-                <Text>{item.Name}</Text>
-                <Text>{item.Sellers[0].ListPrice}</Text>
-                <Text>{item.Sellers[0].Price}</Text>
-                <Text>
-                  {item.Sellers[0].BestInstallment.Count}x
+              </View>
+
+              <View styles={styles.content}>
+                {/* <Text styles={styles.name}>
+                    {item.Name.length > 20
+                      ? `${item.Name.substring(0, 20)}...`
+                      : item.Name}
+                  </Text> */}
+                <Text styles={styles.price}>R${item.Sellers[0].ListPrice}</Text>
+                <Text styles={styles.price}>R${item.Sellers[0].Price}</Text>
+                <Text styles={styles.installment}>
+                  {item.Sellers[0].BestInstallment.Count}x $
                   {item.Sellers[0].BestInstallment.Value}
                 </Text>
               </View>
-            )}
-            ListFooterComponent={this.renderFooter}
-            onEndReached={this.loadRepositories}
-            onEndReachedThreshold={0.5}
-          />
-        </View>
+            </View>
+          )}
+          ListFooterComponent={this.renderFooter}
+          onEndReached={this.loadRepositories}
+          onEndReachedThreshold={0.5}
+          horizontal={true}
+        />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-  },
   card: {
-    maxWidth: 40,
+    marginHorizontal: 20,
+  },
+  img: {
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#000',
+  },
+  name: {
+    fontSize: 9,
+    width: 30,
   },
   list: {
+    flex: 1,
     paddingHorizontal: 20,
+    paddingVertical: 20,
+    flexWrap: 'wrap',
+  },
+  content: {
+    textAlign: 'center',
+  },
+  listContainer: {
+    flex: 1,
+  },
+  price: {
+    fontWeight: '700',
   },
 });
 
