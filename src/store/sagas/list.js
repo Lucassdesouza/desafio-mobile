@@ -33,11 +33,9 @@ function* getProductsPaginate({payload}) {
 
     const currentList = yield select(state => state.list.list);
 
-    let newList = [...currentList, ...bestProducts];
+    currentList.push.apply(currentList, bestProducts);
 
-    console.tron.log(newList);
-
-    yield put({type: types.GET_PRODUCTS_PAGINATE, payload: newList});
+    yield put({type: types.GET_PRODUCTS_PAGINATE, payload: currentList});
   } catch (error) {
     yield put(
       snackbarShowError(

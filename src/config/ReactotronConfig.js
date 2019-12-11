@@ -6,7 +6,7 @@ if (__DEV__) {
   const tron = Reactotron.configure()
     .use(reactotronRedux())
     .use(sagaPlugin())
-    .configure({host: '192.168.1.69'})
+    .configure({host: '192.168.0.180'})
     .connect();
 
   tron.clear();

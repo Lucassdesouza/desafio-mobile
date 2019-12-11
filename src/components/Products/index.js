@@ -11,7 +11,7 @@ import {
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {getProductListPaginate} from '~/store/ducks/list';
+import {getProductList, getProductListPaginate} from '~/store/ducks/list';
 import ItemList from './item';
 
 import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
@@ -33,6 +33,10 @@ class Products extends Component {
     );
   };
 
+  _reload = () => {
+    this.props.getProductList();
+  };
+
   state = {
     data: [],
     page: 0,
@@ -44,12 +48,14 @@ class Products extends Component {
   };
 
   render() {
-    const {products} = this.props;
+    const {pullRefresh, products} = this.props;
     return (
       <View>
-        <View styles={styles.container}>
+        <View styles={styles.list}>
           <FlatList
             data={products}
+            onRefresh={() => this._reload()}
+            refreshing={pullRefresh}
             renderItem={({item, index, separators}) => (
               <View key={item.Id} styles={styles.card}>
                 <Image
@@ -69,7 +75,7 @@ class Products extends Component {
             )}
             ListFooterComponent={this.renderFooter}
             onEndReached={this.loadRepositories}
-            onEndReachedThreshold={0.1}
+            onEndReachedThreshold={0.5}
           />
         </View>
       </View>
@@ -84,6 +90,9 @@ const styles = StyleSheet.create({
   card: {
     maxWidth: 40,
   },
+  list: {
+    paddingHorizontal: 20,
+  },
 });
 
 const mapStateToProps = state => ({
@@ -91,10 +100,11 @@ const mapStateToProps = state => ({
   products: state.list.list,
   categories: state.categories.categories,
   loadingNew: state.list.loadingNew,
+  pullRefresh: state.list.pullRefresh,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({getProductListPaginate}, dispatch);
+  bindActionCreators({getProductList, getProductListPaginate}, dispatch);
 
 export default Products = connect(
   mapStateToProps,

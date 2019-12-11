@@ -14,18 +14,27 @@ const INITIAL_STATE = {
   toggleList: false,
   reloadButton: false,
   loadingNew: false,
+  pullRefresh: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.ASYNC_GET_PRODUCTS:
-      return {...state, toggleList: true, reloadButton: false};
+      return {
+        ...state,
+        reloadButton: false,
+        pullRefresh: true,
+      };
     case types.ASYNC_GET_PRODUCTS_PAGINATE:
       return {...state, loadingNew: true};
     case types.GET_PRODUCTS:
-      return {...state, list: action.payload, toggleList: false};
+      return {
+        ...state,
+        list: action.payload,
+        toggleList: false,
+        pullRefresh: false,
+      };
     case types.GET_PRODUCTS_PAGINATE:
-      console.tron.log(action.payload);
       return {
         ...state,
         list: action.payload,
