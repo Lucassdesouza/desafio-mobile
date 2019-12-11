@@ -12,12 +12,23 @@ export const getProductsList = () =>
     },
   });
 
-export const getProductsListPaginate = () =>
+export const getProductsListPaginate = page =>
   api().request({
     url: '/Search/Criteria',
     method: 'POST',
     data: {
-      Offset: 0,
+      Offset: page,
+      Size: 10,
+    },
+  });
+
+export const getProductsListSearch = (search, page) =>
+  api().request({
+    url: '/Search/Criteria',
+    method: 'POST',
+    data: {
+      Query: search,
+      Offset: page,
       Size: 10,
     },
   });
