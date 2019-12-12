@@ -1,77 +1,70 @@
-# Project Title
+# Products Showcase
 
-One Paragraph of project description goes here
+Loja de produtos diversos
 
-## Getting Started
+## Print do app
+![Print da Aplicação](https://i.ibb.co/bvy6Dn8/Whats-App-Image-2019-12-12-at-14-03-57.jpg)
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
+### Instalação
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+Após clonar o projeto, instalar as dependências
 
 ```
-Give the example
+yarn
 ```
 
-And repeat
+E então realizar os links com o código nativo
 
 ```
-until finished
+react-native link
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+Então rodar o camando para iniciar o aplicativo no emulador ou Smartphone
 
 ```
-Give an example
+react-native run-android
 ```
+## Bibliotecas utilizadas
 
-### And coding style tests
+- axios
 
-Explain what these tests test and why
+- react
 
-```
-Give an example
-```
+- react-native
 
-## Deployment
+- react-native-gesture-handler
 
-Add additional notes about how to deploy this on a live system
+- react-native-paper
 
-## Built With
+- react-native-responsive-screen
 
-- [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-- [Maven](https://maven.apache.org/) - Dependency Management
-- [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+- react-native-vector-icons
 
-## Contributing
+- react-navigation
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+- react-navigation-redux-helpers
 
-## Versioning
+- react-navigation-stack
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+- react-redux
 
-## Authors
+- reactotron-react-native
 
-- **Billie Thompson** - _Initial work_ - [PurpleBooth](https://github.com/PurpleBooth)
+- reactotron-redux
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+- reactotron-redux-saga
+
+- redux
+
+- redux-saga
+
+- styled-components
+
+## Melhorias e correções futuras
+
+- Melhor tratamento das respostas da API
+- Melhor interface do menu de categorias e subcategorias
+- Trazer modal com melhor descrição do produto ao clicar no produto na listagem
+- Adicionar ícones as categorias e subcategorias
+
