@@ -44,7 +44,6 @@ class SubCategoriesScreen extends Component {
             })}
           </List.Section>
         ) : (
-          // <Button title="Botao" onPress={() => this.button()}></Button>
           <ActivityIndicator size="large" color="#0000ff" />
         )}
       </View>

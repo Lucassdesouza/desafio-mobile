@@ -16,7 +16,7 @@ class CategoriesScreen extends Component {
   };
 
   render() {
-    const {toggleList, categories} = this.proprrrrrs;
+    const {toggleList, categories} = this.props;
     return (
       <View>
         {toggleList ? (

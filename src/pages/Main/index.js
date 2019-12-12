@@ -1,18 +1,11 @@
 import React, {Component} from 'react';
-import {
-  View,
-  BackHandler,
-  StyleSheet,
-  Button,
-  ActivityIndicator,
-} from 'react-native';
+import {View, StyleSheet, Button, ActivityIndicator} from 'react-native';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {NavigationActions} from 'react-navigation';
 
-import Products from '~/components/Products';
-import {IconButton, Appbar, Colors, TextInput} from 'react-native-paper';
+import Products from '~/components/ProductsList';
+import {Appbar, Coors, TextInput} from 'react-native-paper';
 
 import {getProductList, getProductsBySearch} from '~/store/ducks/list';
 import {getCategoriestList} from '~/store/ducks/categories';
@@ -21,8 +14,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
-import {Text} from 'react-native-paper';
 
 class Main extends Component {
   static navigationOptions = navigation => ({
@@ -37,56 +28,61 @@ class Main extends Component {
 
   onChangeText = () => {};
 
-  componentDidMount() {
-    // this.props.getProductList();
-    // this.props.getCategoriestList();
-  }
-
   _reload = () => {
     this.props.getProductList();
-    this.props.getCategoriestList();
   };
 
   changeSearch = text => {
     if (text.length > 2) {
       this.props.getProductsBySearch(text);
     }
-    if ((text.length = 0)) {
-      this.props.getProductList();
+  };
+
+  _content = teste => {
+    if (teste) {
+      return (
+        <View style={styles.reload}>
+          <View>
+            <Button
+              color="#E81C0D"
+              title="Recarregar"
+              onPress={() => this._reload()}
+            />
+          </View>
+        </View>
+      );
+    } else {
+      return <Products />;
     }
   };
 
   render() {
-    const {toggleList, reloadButton} = this.props;
+    const {toggleList, reloadButton, loadFail} = this.props;
     return (
-      <View styles={styles.container}>
-        <Appbar.Header>
+      <View style={styles.container}>
+        <Appbar.Header style={styles.navbar}>
           <Appbar.Action
             icon="menu"
             onPress={() => this.props.navigation.navigate('Categories')}
+            style={{flex: 1}}
           />
           <TextInput
             onChangeText={text => this.changeSearch(text)}
-            mode={'outlined'}
+            onBlur={() => this._reload()}
+            placeholder="Buscar"
+            placeholderTextColor={'#fff'}
+            mode={'flat'}
             dense={true}
+            style={styles.input}
           />
         </Appbar.Header>
-        {/* <IconButton
-          onPress={() => this.props.navigation.navigate('Categories')}
-          color="#000"
-          icon="menu"
-          size={28}
-        /> */}
-        {toggleList && reloadButton ? (
-          <ActivityIndicator size="large" color="#000" />
-        ) : (
-          <View styles={styles.reload}>
-            <View>
-              <Button title="Recarregar" onPress={() => this._reload()} />
-            </View>
+        {toggleList ? (
+          <View style={styles.load}>
+            <ActivityIndicator size="large" color="#E81C0D" />
           </View>
+        ) : (
+          this._content(loadFail)
         )}
-        {!toggleList ? <Products /> : <></>}
       </View>
     );
   }
@@ -97,18 +93,25 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignContent: 'center',
+    backgroundColor: '#E0E0E0',
   },
   reload: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'stretch',
     alignSelf: 'center',
+    justifyContent: 'center',
     width: wp('40%'),
-    marginTop: hp('30%'),
+  },
+  load: {
+    justifyContent: 'center',
   },
   input: {
+    flex: 6,
     width: wp('30%'),
+    borderRadius: 10,
+    backgroundColor: '#E81C0D',
+  },
+  navbar: {
+    backgroundColor: '#E81C0D',
   },
 });
 
@@ -116,7 +119,7 @@ const mapStateToProps = state => ({
   toggleList: state.list.toggleList,
   products: state.list.list,
   categories: state.categories.categories,
-  reloadButton: state.list.reloadButton,
+  loadFail: state.list.loadFail,
 });
 
 const mapDispatchToProps = dispatch =>

@@ -13,9 +13,9 @@ export const types = {
 const INITIAL_STATE = {
   list: null,
   toggleList: false,
-  reloadButton: false,
   loadingNew: false,
   pullRefresh: false,
+  loadFail: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -35,18 +35,21 @@ export default (state = INITIAL_STATE, action) => {
         list: action.payload,
         toggleList: false,
         pullRefresh: false,
+        loadFail: false,
       };
     case types.GET_PRODUCTS_PAGINATE:
       return {
         ...state,
         list: action.payload,
+        toggleList: false,
         loadingNew: false,
+        loadFail: false,
       };
     case types.GET_PRODUCTS_FAIL:
       return {
         ...state,
         toggleList: false,
-        reloadButton: true,
+        loadFail: true,
       };
     default:
       return {...state};

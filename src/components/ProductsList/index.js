@@ -6,6 +6,8 @@ import {
   FlatList,
   Image,
   ActivityIndicator,
+  TouchableOpacity,
+  Modal,
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -20,9 +22,11 @@ import {
 
 class Products extends Component {
   state = {
-    data: [],
+    item: [],
+    show: false,
     page: 1,
     loading: false,
+    modalVisible: false,
   };
 
   renderFooter = () => {
@@ -64,35 +68,39 @@ class Products extends Component {
           contentContainerStyle={styles.container}
           data={products}
           renderItem={({item, index, separators}) => (
-            <View key={item.Id} styles={styles.card}>
+            <View key={item.Id} style={styles.card}>
               <Image
                 source={{
                   uri: item.Images[0].ImageUrl,
                 }}
-                style={{
-                  width: wp('30%'),
-                  height: hp('30%'),
-                  paddingHorizontal: wp('10%'),
-                }}
+                style={styles.img}
               />
-              <Text>{item.Name.substring(0, 20)}</Text>
-              <Text styles={styles.name}>
-                {item.Sellers[0].ListPrice
-                  ? `R$ ${item.Sellers[0].ListPrice}`
-                  : 'Sem preço'}
-              </Text>
-              <Text>
-                {item.Sellers[0].Price
-                  ? `R$ ${item.Sellers[0].Price}`
-                  : 'Sem preço'}
-              </Text>
-              <Text>{this.installment(item.Sellers[0])}</Text>
+              <Text style={styles.name}>{item.Name.substring(0, 30)}</Text>
+              <View style={styles.content}>
+                {item.Sellers[0].ListPrice === item.Sellers[0].Price ? (
+                  <></>
+                ) : (
+                  <Text style={styles.oldPrice}>
+                    {item.Sellers[0].ListPrice
+                      ? `R$ ${item.Sellers[0].ListPrice}`
+                      : 'Sem preço'}
+                  </Text>
+                )}
+                <Text style={styles.price}>
+                  {item.Sellers[0].Price
+                    ? `R$ ${item.Sellers[0].Price}`
+                    : 'Sem preço'}
+                </Text>
+                <Text style={styles.installment}>
+                  {this.installment(item.Sellers[0])}
+                </Text>
+              </View>
             </View>
           )}
+          refreshing={this.props.toggleList}
+          onRefresh={this._reload}
           horizontal={false}
-          ListFooterComponent={
-            <ActivityIndicator size="large" color="#0000ff" />
-          }
+          numColumns={2}
           onEndReached={this.loadRepositories}
           onEndReachedThreshold={0.5}
         />
@@ -103,41 +111,48 @@ class Products extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: wp('10%'),
-    alignContent: 'center',
+    paddingHorizontal: wp('6%'),
   },
   card: {
     flex: 1,
+    backgroundColor: '#fff',
     alignSelf: 'center',
-    backgroundColor: 'grey',
     width: wp('40%'),
-    marginHorizontal: wp('10%'),
-    borderColor: '#000',
-    borderWidth: wp('4%'),
+    height: hp('40%'),
+    marginHorizontal: wp('2%'),
+    marginVertical: hp('2%'),
+    paddingHorizontal: wp('2%'),
+    paddingVertical: hp('1%'),
+    borderRadius: 5,
   },
   img: {
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#000',
+    flex: 1,
+    maxHeight: hp('30%'),
+    resizeMode: 'contain',
   },
   name: {
-    fontSize: 9,
-    paddingHorizontal: wp('20%'),
-  },
-  list: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    flexWrap: 'wrap',
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   content: {
-    textAlign: 'center',
+    alignContent: 'center',
   },
   listContainer: {
     flex: 1,
   },
+  oldPrice: {
+    textAlign: 'center',
+    textDecorationLine: 'line-through',
+  },
   price: {
-    fontWeight: '700',
+    fontSize: 16,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#E81C0D',
+  },
+  installment: {
+    textAlign: 'center',
   },
 });
 
@@ -152,7 +167,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({getProductList, getProductListPaginate}, dispatch);
 
-export default Products = connect(
+export default (Products = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Products);
+)(Products));
