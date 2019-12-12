@@ -16,21 +16,25 @@ class CategoriesScreen extends Component {
   };
 
   render() {
-    const {toggleList, categories} = this.props;
+    const {toggleList, categories} = this.proprrrrrs;
     return (
       <View>
-        <List.Section>
-          {categories.Categories.map(item => {
-            return (
-              <TouchableOpacity
-                onPress={() =>
-                  this.loadCategoriesList(item.SubCategories, item.Name)
-                }>
-                <List.Item title={item.Name} />
-              </TouchableOpacity>
-            );
-          })}
-        </List.Section>
+        {toggleList ? (
+          <ActivityIndicator size="large" color="#000" />
+        ) : (
+          <List.Section>
+            {categories.Categories.map(item => {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    this.loadCategoriesList(item.SubCategories, item.Name)
+                  }>
+                  <List.Item title={item.Name} />
+                </TouchableOpacity>
+              );
+            })}
+          </List.Section>
+        )}
       </View>
     );
   }

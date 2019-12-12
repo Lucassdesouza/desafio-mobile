@@ -4,6 +4,7 @@ export const types = {
   ASYNC_GET_SUB_CATEGORIES: 'ASYNC_GET_SUB_CATEGORIES',
 
   GET_CATEGORIES: 'GET_CATEGORIES',
+  GET_CATEGORIES_FAIL: 'GET_CATEGORIES_FAIL',
   GET_SUB_CATEGORIES: 'GET_SUB_CATEGORIES',
 };
 
@@ -14,6 +15,7 @@ const INITIAL_STATE = {
   subCategoriesName: null,
   toggleCategories: false,
   toggleSubCategories: false,
+  reloadButton: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -22,6 +24,11 @@ export default (state = INITIAL_STATE, action) => {
       return {...state};
     case types.GET_CATEGORIES:
       return {...state, categories: action.payload};
+    case types.GET_CATEGORIES_FAIL:
+      return {
+        ...state,
+        reloadButton: true,
+      };
     case types.GET_SUB_CATEGORIES:
       return {
         ...state,

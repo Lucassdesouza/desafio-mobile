@@ -39,6 +39,7 @@ function* getProductsPaginate({payload}) {
 
     yield put({type: types.GET_PRODUCTS_PAGINATE, payload: currentList});
   } catch (error) {
+    yield put({type: types.GET_PRODUCTS_FAIL});
     yield put(
       snackbarShowError(
         'Ocorreu um erro buscar os produtos do servidor. Tente novamente.',
@@ -63,7 +64,14 @@ function* getProductsBySearch(action) {
         routeName: 'Main',
       }),
     );
-  } catch (error) {}
+  } catch (error) {
+    yield put({type: types.GET_PRODUCTS_FAIL});
+    yield put(
+      snackbarShowError(
+        'Ocorreu um erro buscar os produtos do servidor. Tente novamente.',
+      ),
+    );
+  }
 }
 
 function* getBestProducts(products) {

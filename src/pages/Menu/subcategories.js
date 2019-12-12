@@ -13,7 +13,7 @@ import {bindActionCreators} from 'redux';
 
 import {List} from 'react-native-paper';
 
-import {getProductsByCategories} from '~/store/ducks/list';
+import {getProductsBySearch} from '~/store/ducks/list';
 
 class SubCategoriesScreen extends Component {
   componentDidMount() {
@@ -22,9 +22,7 @@ class SubCategoriesScreen extends Component {
     });
   }
 
-  button = () => {
-    console.tron.log(this.props.subCategories);
-  };
+  button = () => {};
 
   render() {
     const {subCategories, toggleSubCategories} = this.props;
@@ -36,7 +34,7 @@ class SubCategoriesScreen extends Component {
               return (
                 <TouchableOpacity
                   onPress={() =>
-                    this.props.getProductsByCategories(
+                    this.props.getProductsBySearch(
                       item.Redirect.SearchCriteria.ApiQuery,
                     )
                   }>
@@ -64,7 +62,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({getProductsByCategories}, dispatch);
+  bindActionCreators({getProductsBySearch}, dispatch);
 
 export default SubCategoriesScreen = connect(
   mapStateToProps,

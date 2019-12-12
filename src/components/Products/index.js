@@ -19,7 +19,11 @@ import {
 } from 'react-native-responsive-screen';
 
 class Products extends Component {
-  componentDidMount() {}
+  state = {
+    data: [],
+    page: 1,
+    loading: false,
+  };
 
   renderFooter = () => {
     if (!this.props.loadingNew) {
@@ -35,15 +39,8 @@ class Products extends Component {
     this.props.getProductList();
   };
 
-  state = {
-    data: [],
-    page: 1,
-    loading: false,
-  };
-
   loadRepositories = () => {
     this.props.getProductListPaginate(this.state.page);
-    console.tron.log(this.state.page);
 
     this.setState(state => {
       return {page: state.page + 1};
@@ -64,6 +61,7 @@ class Products extends Component {
     return (
       <View>
         <FlatList
+          contentContainerStyle={styles.container}
           data={products}
           renderItem={({item, index, separators}) => (
             <View key={item.Id} styles={styles.card}>
@@ -71,10 +69,14 @@ class Products extends Component {
                 source={{
                   uri: item.Images[0].ImageUrl,
                 }}
-                style={{width: 80, height: 80}}
+                style={{
+                  width: wp('30%'),
+                  height: hp('30%'),
+                  paddingHorizontal: wp('10%'),
+                }}
               />
-              {/* <Text>{item.Name}</Text> */}
-              <Text>
+              <Text>{item.Name.substring(0, 20)}</Text>
+              <Text styles={styles.name}>
                 {item.Sellers[0].ListPrice
                   ? `R$ ${item.Sellers[0].ListPrice}`
                   : 'Sem preço'}
@@ -100,8 +102,18 @@ class Products extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: wp('10%'),
+    alignContent: 'center',
+  },
   card: {
-    paddingHorizontal: 20,
+    flex: 1,
+    alignSelf: 'center',
+    backgroundColor: 'grey',
+    width: wp('40%'),
+    marginHorizontal: wp('10%'),
+    borderColor: '#000',
+    borderWidth: wp('4%'),
   },
   img: {
     borderRadius: 4,
@@ -110,7 +122,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 9,
-    width: 30,
+    paddingHorizontal: wp('20%'),
   },
   list: {
     flex: 1,

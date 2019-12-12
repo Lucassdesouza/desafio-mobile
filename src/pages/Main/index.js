@@ -12,9 +12,9 @@ import {bindActionCreators} from 'redux';
 import {NavigationActions} from 'react-navigation';
 
 import Products from '~/components/Products';
-import {IconButton, Colors} from 'react-native-paper';
+import {IconButton, Appbar, Colors, TextInput} from 'react-native-paper';
 
-import {getProductList} from '~/store/ducks/list';
+import {getProductList, getProductsBySearch} from '~/store/ducks/list';
 import {getCategoriestList} from '~/store/ducks/categories';
 
 import {
@@ -29,6 +29,14 @@ class Main extends Component {
     header: null,
   });
 
+  state = {
+    text: 'Buscar',
+    page: 1,
+    loading: false,
+  };
+
+  onChangeText = () => {};
+
   componentDidMount() {
     // this.props.getProductList();
     // this.props.getCategoriestList();
@@ -39,38 +47,68 @@ class Main extends Component {
     this.props.getCategoriestList();
   };
 
+  changeSearch = text => {
+    if (text.length > 2) {
+      this.props.getProductsBySearch(text);
+    }
+    if ((text.length = 0)) {
+      this.props.getProductList();
+    }
+  };
+
   render() {
     const {toggleList, reloadButton} = this.props;
     return (
       <View styles={styles.container}>
-        <IconButton
+        <Appbar.Header>
+          <Appbar.Action
+            icon="menu"
+            onPress={() => this.props.navigation.navigate('Categories')}
+          />
+          <TextInput
+            onChangeText={text => this.changeSearch(text)}
+            mode={'outlined'}
+            dense={true}
+          />
+        </Appbar.Header>
+        {/* <IconButton
           onPress={() => this.props.navigation.navigate('Categories')}
           color="#000"
           icon="menu"
           size={28}
-        />
-        {toggleList ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+        /> */}
+        {toggleList && reloadButton ? (
+          <ActivityIndicator size="large" color="#000" />
         ) : (
-          <Products />
-        )}
-        {reloadButton ? (
           <View styles={styles.reload}>
-            <Button title="Recarregar" onPress={() => this._reload()} />
+            <View>
+              <Button title="Recarregar" onPress={() => this._reload()} />
+            </View>
           </View>
-        ) : (
-          <></>
         )}
+        {!toggleList ? <Products /> : <></>}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    alignContent: 'center',
+  },
   reload: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    alignSelf: 'center',
+    width: wp('40%'),
+    marginTop: hp('30%'),
+  },
+  input: {
+    width: wp('30%'),
   },
 });
 
@@ -82,6 +120,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({getProductList, getCategoriestList}, dispatch);
+  bindActionCreators(
+    {getProductList, getCategoriestList, getProductsBySearch},
+    dispatch,
+  );
 
 export default Main = connect(mapStateToProps, mapDispatchToProps)(Main);

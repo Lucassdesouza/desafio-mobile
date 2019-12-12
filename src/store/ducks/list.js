@@ -68,3 +68,8 @@ export const getProductsByCategories = search => ({
   type: types.ASYNC_GET_PRODUCTS_SEARCH,
   payload: {search},
 });
+
+export const getProductsBySearch = search => ({
+  type: types.ASYNC_GET_PRODUCTS_SEARCH,
+  payload: {search},
+});
