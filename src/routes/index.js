@@ -2,13 +2,27 @@ import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import MainScreen from '~/pages/Main';
-import MenuScreen from '~/pages/Menu';
+import CategoriesScreen from '~/pages/Menu/categories';
+import SubCategoriesScreen from '~/pages/Menu/subcategories';
 
 const Routes = createAppContainer(
   createStackNavigator(
     {
       Main: {screen: MainScreen},
-      Menu: {screen: MenuScreen},
+      Categories: {
+        screen: CategoriesScreen,
+        routeName: 'Categories',
+        navigationOptions: ({navigation}) => ({
+          title: 'Categorias',
+        }),
+      },
+      SubCategories: {
+        screen: SubCategoriesScreen,
+        routeName: 'SubCategories',
+        navigationOptions: ({navigation}) => ({
+          title: navigation.getParam('subcategorie', 'SubCategorias'),
+        }),
+      },
     },
     {
       initialRouteName: 'Main',
@@ -18,7 +32,6 @@ const Routes = createAppContainer(
           fontWeight: 'bold',
         },
       },
-      // transitionConfig: () => fromLeft(500),
     },
   ),
 );

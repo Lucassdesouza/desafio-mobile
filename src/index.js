@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import store from './store';
 
 import SnackBarRedux from '~/components/Snackbar';
+import {AppWithNavigationState} from '~/redux-navigator';
 
 import Routes from '~/routes/';
 
@@ -24,7 +25,7 @@ const theme = {
 const App = () => (
   <Provider store={store}>
     <PaperProvider theme={theme}>
-      <Routes />
+      <AppWithNavigationState />
       <SnackBarRedux />
     </PaperProvider>
   </Provider>

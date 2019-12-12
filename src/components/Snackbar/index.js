@@ -62,7 +62,5 @@ const styles = StyleSheet.create({
   },
   danger: {
     backgroundColor: 'red',
-    //marginHorizontal: 20,
-    //marginBottom: 20,
   },
 });

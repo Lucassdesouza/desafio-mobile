@@ -1,22 +1,37 @@
-import {all, put, takeLatest, call} from 'redux-saga/effects';
+import {all, put, takeLatest, call, select} from 'redux-saga/effects';
 
 import {types} from '../ducks/categories';
 import * as service from '~/services/';
 
-function* getCategories() {
+import {NavigationActions} from 'react-navigation';
+
+function* loadCategories() {
   try {
     const {data} = yield call(service.getCategoriesList);
-
     yield put({type: types.GET_CATEGORIES, payload: data});
-    yield put({type: types.GET_SUB_CATEGORIES, payload: data});
-    // const defaultSettings = {fontSize: 2, notificationOption: true};
-    // yield all([
-    //   call(service.setStorageSettings, defaultSettings),
-    //   put({type: types.SETTINGS_CHANGED, payload: defaultSettings}),
-    // ]);s
   } catch (error) {}
 }
 
+function* loadSubCategories(action) {
+  const list = action.payload.list;
+  const name = action.payload.name;
+
+  yield put({type: types.GET_SUB_CATEGORIES, payload: list});
+
+  yield put(
+    NavigationActions.navigate({
+      routeName: 'SubCategories',
+      params: {
+        subcategorie: name,
+      },
+    }),
+  );
+}
+
 export default function* categoriesSaga() {
-  yield all([takeLatest(types.ASYNC_GET_CATEGORIES, getCategories)]);
+  yield call(loadCategories);
+  yield all([
+    takeLatest(types.ASYNC_GET_CATEGORIES, loadCategories),
+    takeLatest(types.ASYNC_GET_SUB_CATEGORIES, loadSubCategories),
+  ]);
 }

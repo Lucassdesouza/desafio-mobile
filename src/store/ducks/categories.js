@@ -1,6 +1,7 @@
 // Types
 export const types = {
   ASYNC_GET_CATEGORIES: 'ASYNC_GET_CATEGORIES',
+  ASYNC_GET_SUB_CATEGORIES: 'ASYNC_GET_SUB_CATEGORIES',
 
   GET_CATEGORIES: 'GET_CATEGORIES',
   GET_SUB_CATEGORIES: 'GET_SUB_CATEGORIES',
@@ -10,19 +11,22 @@ export const types = {
 const INITIAL_STATE = {
   categories: null,
   subCategories: null,
+  subCategoriesName: null,
   toggleCategories: false,
+  toggleSubCategories: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.ASYNC_GET_CATEGORIES:
-      return {...state, toggleCategories: true};
+      return {...state};
     case types.GET_CATEGORIES:
-      return {...state, categories: action.payload, toggleCategories: false};
+      return {...state, categories: action.payload};
     case types.GET_SUB_CATEGORIES:
       return {
         ...state,
         subCategories: action.payload,
+        toggleSubCategories: true,
       };
     default:
       return {...state};
@@ -33,4 +37,9 @@ export default (state = INITIAL_STATE, action) => {
 
 export const getCategoriestList = () => ({
   type: types.ASYNC_GET_CATEGORIES,
+});
+
+export const subcategoriesList = (list, name) => ({
+  type: types.ASYNC_GET_SUB_CATEGORIES,
+  payload: {list, name},
 });

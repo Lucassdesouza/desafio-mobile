@@ -3,6 +3,8 @@ import {all, takeLatest, call, put, select} from 'redux-saga/effects';
 import {types} from '../ducks/list';
 import * as service from '~/services/';
 
+import {NavigationActions} from 'react-navigation';
+
 import {SnackbarShow, snackbarShowError} from '~/store/ducks/snackbar';
 
 function* getProducts() {
@@ -45,6 +47,25 @@ function* getProductsPaginate({payload}) {
   }
 }
 
+function* getProductsBySearch(action) {
+  try {
+    const query = action.payload.search;
+    const newQuery = query.replace('?map=c,c', '');
+
+    const {data} = yield call(service.getProductsListSearch, newQuery);
+    const products = data.Products;
+
+    const bestProducts = yield call(getBestProducts, products);
+
+    yield put({type: types.GET_PRODUCTS, payload: bestProducts});
+    yield put(
+      NavigationActions.navigate({
+        routeName: 'Main',
+      }),
+    );
+  } catch (error) {}
+}
+
 function* getBestProducts(products) {
   let productsList = [];
 
@@ -67,8 +88,10 @@ function* getBestProducts(products) {
 }
 
 export default function* listSaga() {
+  yield call(getProducts);
   yield all([
     takeLatest(types.ASYNC_GET_PRODUCTS, getProducts),
     takeLatest(types.ASYNC_GET_PRODUCTS_PAGINATE, getProductsPaginate),
+    takeLatest(types.ASYNC_GET_PRODUCTS_SEARCH, getProductsBySearch),
   ]);
 }

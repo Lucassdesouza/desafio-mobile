@@ -3,19 +3,16 @@ import {View, TouchableOpacity, StyleSheet, Text, Button} from 'react-native';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-// import {navigationOptions} from 'react-navigation';
 
-import Products from '~/components/Products';
-import Loading from '~/components/Products/placeholder';
-import {IconButton, Colors} from 'react-native-paper';
+import {subcategoriesList} from '~/store/ducks/categories';
 
 import {List} from 'react-native-paper';
 
-class Menu extends Component {
+class CategoriesScreen extends Component {
   componentDidMount() {}
 
-  static navigationOptions = {
-    headerTitle: 'Categorias',
+  loadCategoriesList = (list, name) => {
+    this.props.subcategoriesList(list, name);
   };
 
   render() {
@@ -26,7 +23,9 @@ class Menu extends Component {
           {categories.Categories.map(item => {
             return (
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('SubCategories')}>
+                onPress={() =>
+                  this.loadCategoriesList(item.SubCategories, item.Name)
+                }>
                 <List.Item title={item.Name} />
               </TouchableOpacity>
             );
@@ -44,6 +43,10 @@ const mapStateToProps = state => ({
   categories: state.categories.categories,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({subcategoriesList}, dispatch);
 
-export default Menu = connect(mapStateToProps, mapDispatchToProps)(Menu);
+export default CategoriesScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CategoriesScreen);

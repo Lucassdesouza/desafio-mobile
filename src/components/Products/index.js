@@ -12,9 +12,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import {getProductList, getProductListPaginate} from '~/store/ducks/list';
-import ItemList from './item';
-
-import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
 
 import {
   widthPercentageToDP as wp,
@@ -25,12 +22,13 @@ class Products extends Component {
   componentDidMount() {}
 
   renderFooter = () => {
-    if (!this.props.loadingNew) return null;
-    return (
-      <View>
-        <ActivityIndicator />
-      </View>
-    );
+    if (!this.props.loadingNew) {
+      return (
+        <View>
+          <ActivityIndicator />
+        </View>
+      );
+    }
   };
 
   _reload = () => {
@@ -39,12 +37,25 @@ class Products extends Component {
 
   state = {
     data: [],
-    page: 0,
+    page: 1,
     loading: false,
   };
 
   loadRepositories = () => {
-    this.props.getProductListPaginate(1);
+    this.props.getProductListPaginate(this.state.page);
+    console.tron.log(this.state.page);
+
+    this.setState(state => {
+      return {page: state.page + 1};
+    });
+  };
+
+  installment = item => {
+    const installment = item.BestInstallment
+      ? `${item.BestInstallment.Count} x R$ ${item.BestInstallment.Value}`
+      : 'Sem parcelamento';
+
+    return installment;
   };
 
   render() {
@@ -53,41 +64,35 @@ class Products extends Component {
     return (
       <View>
         <FlatList
-          style={styles.list}
-          contentContainerStyle={styles.listContainer}
           data={products}
-          onRefresh={() => this._reload()}
-          refreshing={pullRefresh}
           renderItem={({item, index, separators}) => (
-            <View key={item.Id} key={index} styles={styles.card}>
-              <View styles={styles.img}>
-                <Image
-                  source={{
-                    uri: item.Images[0].ImageUrl,
-                  }}
-                  style={{width: 140, height: 140}}
-                />
-              </View>
-
-              <View styles={styles.content}>
-                {/* <Text styles={styles.name}>
-                    {item.Name.length > 20
-                      ? `${item.Name.substring(0, 20)}...`
-                      : item.Name}
-                  </Text> */}
-                <Text styles={styles.price}>R${item.Sellers[0].ListPrice}</Text>
-                <Text styles={styles.price}>R${item.Sellers[0].Price}</Text>
-                <Text styles={styles.installment}>
-                  {item.Sellers[0].BestInstallment.Count}x $
-                  {item.Sellers[0].BestInstallment.Value}
-                </Text>
-              </View>
+            <View key={item.Id} styles={styles.card}>
+              <Image
+                source={{
+                  uri: item.Images[0].ImageUrl,
+                }}
+                style={{width: 80, height: 80}}
+              />
+              {/* <Text>{item.Name}</Text> */}
+              <Text>
+                {item.Sellers[0].ListPrice
+                  ? `R$ ${item.Sellers[0].ListPrice}`
+                  : 'Sem preço'}
+              </Text>
+              <Text>
+                {item.Sellers[0].Price
+                  ? `R$ ${item.Sellers[0].Price}`
+                  : 'Sem preço'}
+              </Text>
+              <Text>{this.installment(item.Sellers[0])}</Text>
             </View>
           )}
-          ListFooterComponent={this.renderFooter}
+          horizontal={false}
+          ListFooterComponent={
+            <ActivityIndicator size="large" color="#0000ff" />
+          }
           onEndReached={this.loadRepositories}
           onEndReachedThreshold={0.5}
-          horizontal={true}
         />
       </View>
     );
@@ -96,7 +101,7 @@ class Products extends Component {
 
 const styles = StyleSheet.create({
   card: {
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
   },
   img: {
     borderRadius: 4,

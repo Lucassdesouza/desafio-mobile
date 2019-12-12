@@ -12,7 +12,6 @@ import {bindActionCreators} from 'redux';
 import {NavigationActions} from 'react-navigation';
 
 import Products from '~/components/Products';
-import Loading from '~/components/Products/placeholder';
 import {IconButton, Colors} from 'react-native-paper';
 
 import {getProductList} from '~/store/ducks/list';
@@ -27,22 +26,12 @@ import {Text} from 'react-native-paper';
 
 class Main extends Component {
   static navigationOptions = navigation => ({
-    title: 'Details',
-    // headerLeft: () => {
-    //   return (
-    //     <IconButton
-    //       onPress={() => navigation.navigate('Menu')}
-    //       color="#000"
-    //       icon="menu"
-    //       size={28}
-    //     />
-    //   );
-    // },
+    header: null,
   });
 
   componentDidMount() {
-    this.props.getProductList();
-    this.props.getCategoriestList();
+    // this.props.getProductList();
+    // this.props.getCategoriestList();
   }
 
   _reload = () => {
@@ -54,10 +43,16 @@ class Main extends Component {
     const {toggleList, reloadButton} = this.props;
     return (
       <View styles={styles.container}>
+        <IconButton
+          onPress={() => this.props.navigation.navigate('Categories')}
+          color="#000"
+          icon="menu"
+          size={28}
+        />
         {toggleList ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
-          <Products></Products>
+          <Products />
         )}
         {reloadButton ? (
           <View styles={styles.reload}>

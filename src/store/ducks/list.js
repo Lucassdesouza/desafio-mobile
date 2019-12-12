@@ -2,6 +2,7 @@
 export const types = {
   ASYNC_GET_PRODUCTS: 'ASYNC_GET_PRODUCTS',
   ASYNC_GET_PRODUCTS_PAGINATE: 'ASYNC_GET_PRODUCTS_PAGINATE',
+  ASYNC_GET_PRODUCTS_SEARCH: 'ASYNC_GET_PRODUCTS_SEARCH',
 
   GET_PRODUCTS: 'GET_PRODUCTS',
   GET_PRODUCTS_FAIL: 'GET_PRODUCTS_FAIL',
@@ -11,7 +12,7 @@ export const types = {
 // Reducers
 const INITIAL_STATE = {
   list: null,
-  toggleList: true,
+  toggleList: false,
   reloadButton: false,
   loadingNew: false,
   pullRefresh: false,
@@ -22,6 +23,7 @@ export default (state = INITIAL_STATE, action) => {
     case types.ASYNC_GET_PRODUCTS:
       return {
         ...state,
+        toggleList: true,
         reloadButton: false,
         pullRefresh: true,
       };
@@ -60,4 +62,9 @@ export const getProductList = () => ({
 export const getProductListPaginate = page => ({
   type: types.ASYNC_GET_PRODUCTS_PAGINATE,
   payload: {page},
+});
+
+export const getProductsByCategories = search => ({
+  type: types.ASYNC_GET_PRODUCTS_SEARCH,
+  payload: {search},
 });
