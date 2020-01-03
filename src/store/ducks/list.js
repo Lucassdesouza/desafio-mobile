@@ -24,11 +24,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         toggleList: true,
-        reloadButton: false,
         pullRefresh: true,
       };
     case types.ASYNC_GET_PRODUCTS_PAGINATE:
       return {...state, loadingNew: true};
+    case types.ASYNC_GET_PRODUCTS_SEARCH:
+      return {...state, toggleList: true};
     case types.GET_PRODUCTS:
       return {
         ...state,

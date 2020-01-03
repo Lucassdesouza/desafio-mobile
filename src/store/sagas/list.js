@@ -9,6 +9,7 @@ import {SnackbarShow, snackbarShowError} from '~/store/ducks/snackbar';
 
 function* getProducts() {
   try {
+    yield put({type: types.ASYNC_GET_PRODUCTS});
     const {data} = yield call(service.getProductsList);
     const products = data.Products;
 

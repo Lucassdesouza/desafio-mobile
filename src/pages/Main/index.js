@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import Products from '~/components/ProductsList';
-import {Appbar, Coors, TextInput} from 'react-native-paper';
+import {Appbar, Coors, TextInput, Portal} from 'react-native-paper';
 
 import {getProductList, getProductsBySearch} from '~/store/ducks/list';
 import {getCategoriestList} from '~/store/ducks/categories';
@@ -62,16 +62,17 @@ class Main extends Component {
       <View style={styles.container}>
         <Appbar.Header style={styles.navbar}>
           <Appbar.Action
+            size={30}
             icon="menu"
             onPress={() => this.props.navigation.navigate('Categories')}
+            disabled={toggleList}
             style={{flex: 1}}
           />
           <TextInput
             onChangeText={text => this.changeSearch(text)}
             onBlur={() => this._reload()}
-            placeholder="Buscar"
-            placeholderTextColor={'#fff'}
-            mode={'flat'}
+            placeholder="Bucar produto"
+            mode="Outlined"
             dense={true}
             style={styles.input}
           />
@@ -102,13 +103,15 @@ const styles = StyleSheet.create({
     width: wp('40%'),
   },
   load: {
+    flex: 1,
     justifyContent: 'center',
   },
   input: {
     flex: 6,
     width: wp('30%'),
+    marginHorizontal: 20,
     borderRadius: 10,
-    backgroundColor: '#E81C0D',
+    backgroundColor: '#fff',
   },
   navbar: {
     backgroundColor: '#E81C0D',

@@ -7,11 +7,12 @@ import {
   Button,
   ActivityIndicator,
 } from 'react-native';
+import {List} from 'react-native-paper';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {List} from 'react-native-paper';
+import MenuList from '~/components/CategoriesTreeList/list';
 
 import {getProductsBySearch} from '~/store/ducks/list';
 
@@ -29,20 +30,7 @@ class SubCategoriesScreen extends Component {
     return (
       <View>
         {toggleSubCategories ? (
-          <List.Section>
-            {subCategories.map(item => {
-              return (
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.getProductsBySearch(
-                      item.Redirect.SearchCriteria.ApiQuery,
-                    )
-                  }>
-                  <List.Item title={item.Name} />
-                </TouchableOpacity>
-              );
-            })}
-          </List.Section>
+          <MenuList list={subCategories} treeLevel={2} />
         ) : (
           <ActivityIndicator size="large" color="#0000ff" />
         )}
@@ -54,14 +42,12 @@ class SubCategoriesScreen extends Component {
 const styles = StyleSheet.create({});
 
 const mapStateToProps = state => ({
-  toggleList: state.list.toggleList,
   subCategories: state.categories.subCategories,
   toggleSubCategories: state.categories.toggleSubCategories,
   subCategoriesName: state.categories.subCategoriesName,
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({getProductsBySearch}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 export default SubCategoriesScreen = connect(
   mapStateToProps,

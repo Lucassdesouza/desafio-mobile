@@ -7,8 +7,9 @@ import {
   Image,
   ActivityIndicator,
   TouchableOpacity,
-  Modal,
+  TouchableHighlight,
 } from 'react-native';
+import {Modal, Portal} from 'react-native-paper';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -59,43 +60,70 @@ class Products extends Component {
     return installment;
   };
 
+  renderModal = () => (
+    <Portal>
+      <Modal
+        visible={this.state.show}
+        onDismiss={() => this.setState({show: false})}>
+        <View>
+          <View
+            style={{
+              textAlign: 'center',
+              alignSelf: 'center',
+              backgroundColor: '#eee',
+              width: 300,
+              height: 300,
+            }}>
+            <Text>Hello World!</Text>
+          </View>
+        </View>
+      </Modal>
+    </Portal>
+  );
+
   render() {
     const {pullRefresh, products} = this.props;
 
     return (
       <View>
+        {this.renderModal()}
         <FlatList
           contentContainerStyle={styles.container}
           data={products}
           renderItem={({item, index, separators}) => (
-            <View key={item.Id} style={styles.card}>
-              <Image
-                source={{
-                  uri: item.Images[0].ImageUrl,
-                }}
-                style={styles.img}
-              />
-              <Text style={styles.name}>{item.Name.substring(0, 30)}</Text>
-              <View style={styles.content}>
-                {item.Sellers[0].ListPrice === item.Sellers[0].Price ? (
-                  <></>
-                ) : (
-                  <Text style={styles.oldPrice}>
-                    {item.Sellers[0].ListPrice
-                      ? `R$ ${item.Sellers[0].ListPrice}`
+            <TouchableOpacity
+              onLongPress={() => {
+                this.setState({show: true});
+              }}>
+              <View key={item.Id} style={styles.card}>
+                <Image
+                  source={{
+                    uri: item.Images[0].ImageUrl,
+                  }}
+                  style={styles.img}
+                />
+                <Text style={styles.name}>{item.Name.substring(0, 30)}</Text>
+                <View style={styles.content}>
+                  {item.Sellers[0].ListPrice === item.Sellers[0].Price ? (
+                    <></>
+                  ) : (
+                    <Text style={styles.oldPrice}>
+                      {item.Sellers[0].ListPrice
+                        ? `R$ ${item.Sellers[0].ListPrice}`
+                        : 'Sem preço'}
+                    </Text>
+                  )}
+                  <Text style={styles.price}>
+                    {item.Sellers[0].Price
+                      ? `R$ ${item.Sellers[0].Price}`
                       : 'Sem preço'}
                   </Text>
-                )}
-                <Text style={styles.price}>
-                  {item.Sellers[0].Price
-                    ? `R$ ${item.Sellers[0].Price}`
-                    : 'Sem preço'}
-                </Text>
-                <Text style={styles.installment}>
-                  {this.installment(item.Sellers[0])}
-                </Text>
+                  <Text style={styles.installment}>
+                    {this.installment(item.Sellers[0])}
+                  </Text>
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
           )}
           refreshing={this.props.toggleList}
           onRefresh={this._reload}
@@ -167,7 +195,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({getProductList, getProductListPaginate}, dispatch);
 
-export default (Products = connect(
+export default Products = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Products));
+)(Products);

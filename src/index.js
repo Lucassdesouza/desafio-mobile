@@ -10,6 +10,8 @@ import {AppWithNavigationState} from '~/redux-navigator';
 
 import Routes from '~/routes/';
 
+console.disableYellowBox = true;
+
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 
 const theme = {
